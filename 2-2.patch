@@ -1,0 +1,29 @@
+diff --git a/mall-security/src/main/java/com/macro/mall/security/config/SecurityConfig.java b/mall-security/src/main/java/com/macro/mall/security/config/SecurityConfig.java
+index 49a8fc2..cd79257 100644
+--- a/mall-security/src/main/java/com/macro/mall/security/config/SecurityConfig.java
++++ b/mall-security/src/main/java/com/macro/mall/security/config/SecurityConfig.java
+@@ -25,6 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
+ @EnableWebSecurity
+ public class SecurityConfig {
+ 
++
+     @Autowired
+     private IgnoreUrlsConfig ignoreUrlsConfig;
+     @Autowired
+@@ -36,6 +37,16 @@ public class SecurityConfig {
+     @Autowired(required = false)
+     private DynamicAuthorizationManager dynamicAuthorizationManager;
+ 
++    
++    @Override
++    protected void configure(HttpSecurity httpSecurity) throws Exception {
++        httpSecurity
++            .authorizeRequests()
++            .antMatchers("/admin/login", "/sso/login")
++            .permitAll()
++            .anyRequest().authenticated();
++    }
++
+     @Bean
+     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+         httpSecurity.authorizeHttpRequests(registry -> {

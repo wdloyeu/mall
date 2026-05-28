@@ -25,6 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
+
     @Autowired
     private IgnoreUrlsConfig ignoreUrlsConfig;
     @Autowired
@@ -35,6 +36,16 @@ public class SecurityConfig {
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
     @Autowired(required = false)
     private DynamicAuthorizationManager dynamicAuthorizationManager;
+
+    
+    @Override
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+            .authorizeRequests()
+            .antMatchers("/admin/login", "/sso/login")
+            .permitAll()
+            .anyRequest().authenticated();
+    }
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
