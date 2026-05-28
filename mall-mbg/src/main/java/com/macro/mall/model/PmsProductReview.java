@@ -7,23 +7,24 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @TableName("pms_product_review")
-public class PmsProductReview {
-    
+public class PmsProductReview implements Serializable {
+
     @TableId(type = IdType.AUTO)
     private Long id;
-    
+
     private Long productId;
-    
+
     private Long memberId;
-    
+
     private Integer star;
-    
+
     private String content;
-    
+
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 }
