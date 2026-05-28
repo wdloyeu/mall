@@ -36,6 +36,15 @@ public class SecurityConfig {
     @Autowired(required = false)
     private DynamicAuthorizationManager dynamicAuthorizationManager;
 
+    @Override
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+            .authorizeRequests()
+            .antMatchers("/admin/login", "/sso/login")
+            .authenticated()   // ← 这一行是同事刚改的
+            .anyRequest().permitAll();
+    }
+
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(registry -> {
